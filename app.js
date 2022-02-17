@@ -1,20 +1,45 @@
 const NodeMediaServer = require('node-media-server');
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
+const { Server } = require("socket.io");
+const io = new Server(server);
+
+
+let streamChannel = null;
+app.get('/', (req, res) => {
+  res.json({channel: streamChannel});
+});
+
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
+
+io.on('switch_stream', (name)=>{
+  streamChannel = name
+  io.broadcast('switch_stream', streamChannel)
+})
+
+server.listen(3000, () => {
+  console.log('listening on *:3000');
+});
 
 const config = {
   rtmp: {
-    port: 443,
+    port: 1935,
     chunk_size: 60000,
     gop_cache: true,
     ping: 30,
     ping_timeout: 60
   },
   http: {
-    port: process.env.PORT || 8000,
+    port: 8000,
     mediaroot: './media',
     allow_origin: '*'
   },
   trans: {
-    ffmpeg: '/app/vendor/ffmpeg/ffmpeg',
+    ffmpeg: '/usr/local/bin/ffmpeg',
     tasks: [
       {
         app: 'live',
