@@ -8,3 +8,9 @@ ffmpeg -stream_loop -1 -re -i '10 second lens pack opening video-9HRjopTKNC8.mp4
 
 obs
 rtmp://64.227.30.198:1935/live
+
+to do:
+ssl cert
+make sure socket and events are working correctly
+connect multiple obs livestreams
+see if transmuxing is necessary
