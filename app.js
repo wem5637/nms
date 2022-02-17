@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
 
 io.on('switch_stream', (name)=>{
   streamChannel = name
-  io.broadcast('switch_stream', streamChannel)
+  io.sockets.emit('switch_stream', streamChannel)
 })
 
 server.listen(3000, () => {
@@ -66,9 +66,9 @@ var nms = new NodeMediaServer(config)
 nms.run();
 
 nms.on('postPublish', (id, StreamPath, args) => {
-  io.broadcast('refetch')
+  io.sockets.emit('refetch')
 });
 
 nms.on('postConnect', (id, args) => {
-  io.broadcast('refetch')
+  io.sockets.emit('refetch')
 });
