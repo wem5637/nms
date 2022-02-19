@@ -6,7 +6,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
-    origin: "http://localhost:3001",
+    origin: "*",
     methods: ["GET", "POST"]
   }
 });
@@ -25,8 +25,8 @@ io.on('switch_stream', (name)=>{
   io.sockets.emit('switch_stream', streamChannel)
 })
 
-server.listen(3000, () => {
-  console.log('listening on *:3000');
+server.listen(80, () => {
+  console.log('listening on *:80');
 });
 
 const config = {
