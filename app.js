@@ -1,5 +1,6 @@
 const NodeMediaServer = require('node-media-server');
 const express = require('express');
+const fs = require('fs');
 const app = express();
 const https = require('https');
 const options = {
