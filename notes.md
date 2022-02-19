@@ -14,3 +14,8 @@ ssl cert
 make sure socket and events are working correctly
 connect multiple obs livestreams
 see if transmuxing is necessary
+
+from nms github - ssl cert directions for self signed cert
+openssl genrsa -out privkey.pem 1024
+openssl req -new -key privkey.pem -out certrequest.csr
+openssl x509 -req -in certrequest.csr -signkey privkey.pem -out fullchain.pem

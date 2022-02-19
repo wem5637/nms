@@ -43,11 +43,15 @@ const config = {
     ping_timeout: 60
   },
   https: {
-    port: 8000,
-    mediaroot: './media',
+    port: 8080,
     allow_origin: '*',
     key: './privkey.pem',
     cert: './fullchain.pem'
+  },
+  http: {
+    port: 8000,
+    mediaroot: './media',
+    allow_origin: '*'
   },
   trans: {
     ffmpeg: '/usr/bin/ffmpeg',

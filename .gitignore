@@ -1,5 +1,6 @@
 privkey.pem
 fullchain.pem
+certrequest.csr
 media
 node_modules
 yarn.lock
