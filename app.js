@@ -31,6 +31,9 @@ io.on('connection', (socket) => {
     streamChannel = name
     io.emit('switch_stream', name)
   })
+  socket.on('chat', (obj)=>{
+    io.emit('comment', obj)
+  })
 });
 
 
