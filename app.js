@@ -1,6 +1,7 @@
 const NodeMediaServer = require('node-media-server');
 const express = require('express');
 const fs = require('fs');
+const cors = require('cors')
 const app = express();
 const http = require('http');
 const https = require('https');
@@ -8,6 +9,7 @@ const options = {
   key: fs.readFileSync('privkey.pem'),
   cert: fs.readFileSync('fullchain.pem')
 };
+app.use(cors())
 const httpServer = http.createServer(app);
 const httpsServer = https.createServer(options, app);
 const { Server } = require("socket.io");
