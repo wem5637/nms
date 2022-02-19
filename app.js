@@ -27,12 +27,12 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
   console.log('a user connected');
+  socket.on('switch_stream', (name)=>{
+    streamChannel = name
+    io.emit('switch_stream', name)
+  })
 });
 
-io.on('switch_stream', (name)=>{
-  streamChannel = name
-  io.sockets.emit('switch_stream', streamChannel)
-})
 
 httpServer.listen(8080, () => {
   console.log('listening http on *:8080');
