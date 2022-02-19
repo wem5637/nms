@@ -2,14 +2,16 @@ const NodeMediaServer = require('node-media-server');
 const express = require('express');
 const fs = require('fs');
 const app = express();
+const http = require('http');
 const https = require('https');
 const options = {
   key: fs.readFileSync('privkey.pem'),
   cert: fs.readFileSync('fullchain.pem')
 };
-const server = https.createServer(options, app);
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(options, app);
 const { Server } = require("socket.io");
-const io = new Server(server, {
+const io = new Server(httpServer, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"]
@@ -30,8 +32,11 @@ io.on('switch_stream', (name)=>{
   io.sockets.emit('switch_stream', streamChannel)
 })
 
-server.listen(80, () => {
-  console.log('listening on *:80');
+httpServer.listen(8080, () => {
+  console.log('listening http on *:8080');
+});
+httpsServer.listen(8443, () => {
+  console.log('listening https on *:8443');
 });
 
 const config = {
@@ -43,13 +48,13 @@ const config = {
     ping_timeout: 60
   },
   https: {
-    port: 8080,
+    port: 7080,
     allow_origin: '*',
     key: './privkey.pem',
     cert: './fullchain.pem'
   },
   http: {
-    port: 8000,
+    port: 7000,
     mediaroot: './media',
     allow_origin: '*'
   },
