@@ -1,8 +1,12 @@
 const NodeMediaServer = require('node-media-server');
 const express = require('express');
 const app = express();
-const http = require('http');
-const server = http.createServer(app);
+const https = require('https');
+const options = {
+  key: fs.readFileSync('privkey.pem'),
+  cert: fs.readFileSync('fullchain.pem')
+};
+const server = https.createServer(options, app);
 const { Server } = require("socket.io");
 const io = new Server(server, {
   cors: {
@@ -37,11 +41,13 @@ const config = {
     ping: 30,
     ping_timeout: 60
   },
-  http: {
+  https: {
     port: 8000,
     mediaroot: './media',
-    allow_origin: '*'
-  },
+    allow_origin: '*',
+    key: './privkey.pem',
+    cert: './fullchain.pem'
+  }
   trans: {
     ffmpeg: '/usr/bin/ffmpeg',
     tasks: [
