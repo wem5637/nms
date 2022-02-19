@@ -47,7 +47,7 @@ const config = {
     allow_origin: '*',
     key: './privkey.pem',
     cert: './fullchain.pem'
-  }
+  },
   trans: {
     ffmpeg: '/usr/bin/ffmpeg',
     tasks: [
